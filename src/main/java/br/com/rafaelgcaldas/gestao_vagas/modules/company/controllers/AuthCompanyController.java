@@ -11,7 +11,7 @@ import javax.naming.AuthenticationException;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthCompanyConytroller {
+public class AuthCompanyController {
 
     @Autowired
     private AuthCompanyUseCase authCompanyUseCase;
