@@ -24,6 +24,7 @@ public class AuthCompanyUseCase {
     private String secretKey;
 
     public String execute(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
+
         var company = companyRepository.findByUsername(authCompanyDTO.getUsername()).orElseThrow(
                 () -> new UsernameNotFoundException("Company not found"));
 
