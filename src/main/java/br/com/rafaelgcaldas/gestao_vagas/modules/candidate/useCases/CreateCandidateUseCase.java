@@ -22,12 +22,8 @@ public class CreateCandidateUseCase {
                     throw new UserFoundException();
                 });
 
-        System.out.println("opa" + candidateEntity);
-
         var password = passwordEncoder.encode(candidateEntity.getPassword());
         candidateEntity.setPassword(password);
-
-        System.out.println("test" + candidateEntity);
 
         return this.candidateRepository.save(candidateEntity);
     }
