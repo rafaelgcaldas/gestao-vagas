@@ -5,6 +5,13 @@ import br.com.rafaelgcaldas.gestao_vagas.modules.candidate.useCases.CreateCandid
 import br.com.rafaelgcaldas.gestao_vagas.modules.candidate.useCases.ListAllJobsFilterByUseCase;
 import br.com.rafaelgcaldas.gestao_vagas.modules.candidate.useCases.ProfileCandidateUseCase;
 import br.com.rafaelgcaldas.gestao_vagas.modules.company.entities.JobEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +59,16 @@ public class CandidateController {
 
     @GetMapping("/job")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @Tag(name = "Candidate", description = "Infomrações do candidato")
+    @Operation(summary = "Listagem de vagas disponível para o candidato", description = "Lista de vagas")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", content = {
+            @Content(
+                array = @ArraySchema(schema = @Schema(implementation = JobEntity.class))
+            )
+        }),
+
+    })
     public List<JobEntity> findJobByFilter(@RequestParam String filter) {
         return this.listAllJobsFilterByUseCase.execute(filter);
     }
