@@ -1,5 +1,6 @@
 package br.com.rafaelgcaldas.gestao_vagas.modules.candidate.controllers;
 
+import br.com.rafaelgcaldas.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDto;
 import br.com.rafaelgcaldas.gestao_vagas.modules.candidate.entities.CandidateEntity;
 import br.com.rafaelgcaldas.gestao_vagas.modules.candidate.useCases.CreateCandidateUseCase;
 import br.com.rafaelgcaldas.gestao_vagas.modules.candidate.useCases.ListAllJobsFilterByUseCase;
@@ -48,6 +49,21 @@ public class CandidateController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @Tag(name = "Candidate", description = "Infomrações do candidato")
+    @Operation(
+        summary = "Perfil do candidato",
+        description = "Esse método é responsável por buscar infromações do perfil do candidato"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = ProfileCandidateResponseDto.class))
+        }),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+        @ApiResponse(responseCode = "404", description = "User Not Found")
+    })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> get(HttpServletRequest request) {
         var idCandidate = request.getAttribute("candidate_id");
         try {
