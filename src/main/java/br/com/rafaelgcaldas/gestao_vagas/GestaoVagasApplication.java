@@ -9,13 +9,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(
-	info = @Info(
-		title = "Gestão de Vagas API",
-		version = "1.0.0",
-		description = "API para gestão de vagas de emprego"
-	)
-)
+//@OpenAPIDefinition(
+//	info = @Info(
+//		title = "Gestão de Vagas API",
+//		version = "1.0.0",
+//		description = "API para gestão de vagas de emprego"
+//	)
+//)
 @SecurityScheme(
 		name = "jwt_auth",
 		scheme = "bearer",
