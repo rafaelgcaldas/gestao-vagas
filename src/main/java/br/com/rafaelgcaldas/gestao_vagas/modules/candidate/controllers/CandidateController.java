@@ -26,6 +26,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/candidate")
+@Tag(name = "Candidate", description = "Infomrações do candidato")
 public class CandidateController {
 
     @Autowired
@@ -38,6 +39,19 @@ public class CandidateController {
     private ListAllJobsFilterByUseCase listAllJobsFilterByUseCase;
 
     @PostMapping("/")
+    @Operation(
+        summary = "Cadastro de candidato",
+        description = "Esse método é responsável por cadastrar um candidato"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", content = {
+            @Content(
+                array = @ArraySchema(schema = @Schema(implementation = CandidateEntity.class))
+            )
+        }),
+        @ApiResponse(responseCode = "400", description = "Usuário já existe"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     public ResponseEntity<Object> create (@Valid @RequestBody CandidateEntity candidateEntity) {
         try {
             var result = this.createCandidateUseCase.execute(candidateEntity);
@@ -49,7 +63,6 @@ public class CandidateController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('CANDIDATE')")
-    @Tag(name = "Candidate", description = "Infomrações do candidato")
     @Operation(
         summary = "Perfil do candidato",
         description = "Esse método é responsável por buscar infromações do perfil do candidato"
@@ -76,7 +89,6 @@ public class CandidateController {
 
     @GetMapping("/job")
     @PreAuthorize("hasRole('CANDIDATE')")
-    @Tag(name = "Candidate", description = "Infomrações do candidato")
     @Operation(summary = "Listagem de vagas disponível para o candidato", description = "Lista de vagas")
     @ApiResponses({
         @ApiResponse(responseCode = "200", content = {
